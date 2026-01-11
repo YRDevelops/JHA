@@ -56,7 +56,7 @@ document.getElementById('bankForm').addEventListener('submit', async function(e)
         yearlyIncome: yearlyIncome.value
     };
 
-    const res = await fetch("http://127.0.0.1:5000/analyze",{
+    const res = await fetch("https://jha-nkh9.onrender.com/analyze",{
         method:"POST",
         headers:{"Content-Type":"application/json"},
         body:JSON.stringify(data)
@@ -75,3 +75,4 @@ document.getElementById('bankForm').addEventListener('submit', async function(e)
 
 </body>
 </html>
+
