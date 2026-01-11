@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Bank Details & Expense Tracker</title>
+
+<style>
+body { font-family: sans-serif; background-color: #f4f7f6; }
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+input, button {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<h2>🏦 Bank Detail Entry</h2>
+
+<form id="bankForm">
+
+<input type="text" id="accountNumber" placeholder="Account Number" required>
+<input type="text" id="ifscCode" placeholder="IFSC Code" required>
+<input type="number" id="monthlyExpense" placeholder="Monthly Expense" required>
+<input type="number" id="yearlyIncome" placeholder="Yearly Income" required>
+
+<button>Save Data & Analyze</button>
+</form>
+
+<div id="analysisResult"></div>
+</div>
+
+<script>
+document.getElementById('bankForm').addEventListener('submit', async function(e){
+    e.preventDefault();
+
+    const data = {
+        accountNumber: accountNumber.value,
+        ifscCode: ifscCode.value,
+        monthlyExpense: monthlyExpense.value,
+        yearlyIncome: yearlyIncome.value
+    };
+
+    const res = await fetch("http://127.0.0.1:5000/analyze",{
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify(data)
+    });
+
+    const result = await res.json();
+
+    document.getElementById("analysisResult").innerHTML = `
+        Yearly Expense: ${result.yearly_expense}<br>
+        Savings: ${result.yearly_savings_potential}<br>
+        Advice: ${result.expense_suggestion}<br>
+        Investment: ${result.investment_advice}
+    `;
+});
+</script>
+
+</body>
+</html>
